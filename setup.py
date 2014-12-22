@@ -13,6 +13,11 @@ setup(
     author_email="paultag@debian.org",
     long_description=long_description,
     description='does some stuff with things & stuff',
+    entry_points={
+        'console_scripts': [
+            'cb = cb.cli:cb',
+        ]
+    },
     license="Expat",
     url="",
     platforms=['any']
