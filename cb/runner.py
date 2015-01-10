@@ -1,12 +1,16 @@
 import os
+import glob
 import asyncio
-from .utils import copy_source
+
+from .utils import copy_source, extract_changes
+
 from aiodocker.docker import Docker
 
 
 class Runner:
-    def __init__(self):
+    def __init__(self, output):
         self.docker = Docker()
+        self.output = output
 
     @asyncio.coroutine
     def run(self, dsc, *args):
@@ -32,7 +36,9 @@ class Runner:
                 "Links": [],
             })
             yield from container.wait()
-            print("Finished")
+
+            for fp in glob.glob("%s/*changes" % (srcdir)):
+                extract_changes(fp, self.output)
 
             # data = yield from container.copy("/fnord")
             # print([data.extractfile(x.name).read() for x in data.members])

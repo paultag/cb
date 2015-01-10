@@ -23,6 +23,15 @@ def copy_source(path):
             pass
 
 
+def extract_changes(changes, dest):
+    sourcedir = os.path.dirname(os.path.abspath(changes))
+    with open(changes, 'r') as fd:
+        c = debian.deb822.Changes(fd)
+    for file_ in [os.path.join(sourcedir, x['name']) for x in c['Files']]:
+        shutil.copy(file_, dest)
+    shutil.copy(changes, dest)
+
+
 @contextmanager
 def tmpdir(*args, **kwargs):
     mdir = tempfile.mkdtemp(*args, **kwargs)
