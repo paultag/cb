@@ -9,10 +9,10 @@ class Runner:
         self.docker = Docker()
 
     @asyncio.coroutine
-    def run(self, dsc):
+    def run(self, dsc, *args):
         with copy_source(dsc) as (d, srcdir):
             container = yield from self.docker.containers.create({
-                "Cmd": "/build/%s" % (os.path.basename(dsc)),
+                "Cmd": ["/build/%s" % (os.path.basename(dsc))] + list(args),
                 "Image": "debian-devel:unstable",
                 "AttachStdin": True,
                 "AttachStdout": True,
