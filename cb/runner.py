@@ -12,7 +12,9 @@ class Runner:
     def run(self, dsc, *args):
         with copy_source(dsc) as (d, srcdir):
             container = yield from self.docker.containers.create({
-                "Cmd": ["/build/%s" % (os.path.basename(dsc))] + list(args),
+                "Cmd": [
+                    "/build/%s" % (os.path.basename(dsc))
+                ] + list(args),
                 "Image": "debian-devel:unstable",
                 "AttachStdin": True,
                 "AttachStdout": True,
