@@ -29,16 +29,12 @@ class Runner:
                 "OpenStdin": False,
                 "StdinOnce": False
             })
-            yield from container.start({
-                "Binds": ["%s:/build/" % (srcdir)],
-                "Privileged": False,
-                "PortBindings": [],
-                "Links": [],
-            })
+            yield from container.start({"Binds": ["%s:/build/" % (srcdir)],
+                                        "Privileged": False,
+                                        "PortBindings": [],
+                                        "Links": []})
             yield from container.wait()
+            # Logs
 
             for fp in glob.glob("%s/*changes" % (srcdir)):
                 extract_changes(fp, self.output)
-
-            # data = yield from container.copy("/fnord")
-            # print([data.extractfile(x.name).read() for x in data.members])
