@@ -3,6 +3,7 @@ set -e
 
 DSC=$1
 shift
+CHOWN_ID=$(stat -c "%u:%g" ${DSC})
 
 if [ "x${DSC}" = "x" ]; then
     echo "Missing DSC argument"
@@ -24,3 +25,6 @@ dpkg-source -x ${DSC} build
 cd build
 mk-build-deps -r -i -t "apt-get -y --no-install-recommends"
 dpkg-buildpackage $@
+cd ..
+rm -rf build
+chown ${CHOWN_ID} *

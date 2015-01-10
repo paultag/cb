@@ -33,5 +33,6 @@ class Runner:
             })
             yield from container.wait()
             print("Finished")
+
             # data = yield from container.copy("/fnord")
             # print([data.extractfile(x.name).read() for x in data.members])
