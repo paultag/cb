@@ -13,6 +13,14 @@ class Runner:
         self.output = output
 
     @asyncio.coroutine
+    def build_image(self, variant):
+        root = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "images",
+            variant
+        )
+
+    @asyncio.coroutine
     def run(self, dsc, *args):
         with copy_source(dsc) as (d, srcdir):
             container = yield from self.docker.containers.create({

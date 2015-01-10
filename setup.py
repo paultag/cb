@@ -16,6 +16,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cb = cb.cli:cb',
+            'cb-mkimage = cb.cli:cb_mkimage',
         ]
     },
     license="Expat",
